@@ -34,6 +34,8 @@ The app provides a simple UI form to check the ranking of a domain for a given k
     DATAFORSEO_VERSION=v3
     DATAFORSEO_TIMEOUT=120
 
+    ⚠️ The API password is generated automatically in your DataForSEO dashboard
+
 4. Generate application key (if not set):
     ```bash
     php artisan key:generate
@@ -58,3 +60,40 @@ The app provides a simple UI form to check the ranking of a domain for a given k
    - Language (choose from dropdown)  
 3. Click **Search**.  
 4. The app will display the organic ranking of the domain in Google SERP.
+
+---
+
+## How it works (overview)
+
+First tries with the SDK (jovix/dataforseo-clientv3) against the Google Organic Live Advanced endpoint.
+
+If the SDK fails, it falls back to a direct HTTP request using Http::withBasicAuth(...).
+
+The form uses a small default list of locations and languages to avoid huge payloads and timeouts locally.
+
+Domains are normalized before comparison (protocol, path, port, www, IDN → ASCII are stripped).
+
+---
+
+## Why a minimal list of locations/languages?
+
+The Google SERP locations endpoint can return tens of MB of JSON and cause timeouts on localhost.
+For this test task, the app ships with a reduced map (US, UK, CA, etc.) that satisfies the requirements while keeping it stable.
+
+---
+
+## Future improvements (optional)
+
+Fetch real locations by country (/v3/serp/google/locations?country=us) with caching (24h).
+
+Add autocomplete for location/language dropdowns.
+
+Artisan command to preload locations into SQLite/JSON.
+
+Polish UI with Tailwind (dropdown search, better feedback).
+
+---
+
+## License
+
+MIT
