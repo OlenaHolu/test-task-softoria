@@ -18,7 +18,7 @@ The app provides a simple UI form to check the ranking of a domain for a given k
 
 1. Clone the repository and install dependencies:
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/OlenaHolu/test-task-softoria.git
    cd dataforseo-app
    composer install
 
