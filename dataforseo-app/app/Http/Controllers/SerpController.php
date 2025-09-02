@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use App\Services\DataForSeoService;
+
 class SerpController extends Controller
 {
     public function index(DataForSeoService $dfs)
@@ -23,12 +24,14 @@ class SerpController extends Controller
 
         try {
             $data = $request->validate([
-                'keyword'       => ['required','string','min:2','max:200'],
+                'keyword'       => ['required', 'string', 'min:2', 'max:200'],
                 'domain'        => [
-                    'required','string','max:200',
-                    function($attr,$val,$fail){
+                    'required',
+                    'string',
+                    'max:200',
+                    function ($attr, $val, $fail) {
                         $v = strtolower(trim($val));
-                        if (preg_match('~^https?://~',$v)) {
+                        if (preg_match('~^https?://~', $v)) {
                             return $fail('Вкажіть лише домен без http/https.');
                         }
                         if (!preg_match('~^[a-z0-9.-]+\.[a-z]{2,}$~i', $v)) {
@@ -39,8 +42,8 @@ class SerpController extends Controller
                         }
                     }
                 ],
-                'location_code' => ['required','integer', Rule::in($locations)],
-                'language_code' => ['required','string', Rule::in($languages)],
+                'location_code' => ['required', 'integer', Rule::in($locations)],
+                'language_code' => ['required', 'string', Rule::in($languages)],
             ]);
         } catch (ValidationException $e) {
             return response()->json([

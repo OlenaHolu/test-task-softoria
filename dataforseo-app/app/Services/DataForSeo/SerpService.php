@@ -21,7 +21,7 @@ class SerpService
 
         try {
             $result = $this->searchWithSdk($keyword, $locationCode, $languageCode);
-            
+
             if ($result) {
                 return $this->formatResponse($result, $keyword, $normalizedDomain);
             }
@@ -35,7 +35,7 @@ class SerpService
 
         try {
             $result = $this->searchWithHttp($keyword, $locationCode, $languageCode);
-            
+
             if ($result) {
                 return $this->formatResponse($result, $keyword, $normalizedDomain);
             }
@@ -62,7 +62,7 @@ class SerpService
         $model->setKeyword($keyword);
         $model->setLocationCode($locationCode);
         $model->setLanguageCode($languageCode);
-        
+
         if (method_exists($model, 'setDevice')) $model->setDevice("desktop");
         if (method_exists($model, 'setOs')) $model->setOs("windows");
         if (method_exists($model, 'setNum')) $model->setNum(100);
@@ -78,7 +78,7 @@ class SerpService
         }
 
         $response = $model->get();
-        
+
         if (!$response || !isset($response->tasks[0]->result[0]->items)) {
             return null;
         }
@@ -99,7 +99,7 @@ class SerpService
         ]];
 
         $response = $this->client->httpRequest('serp/google/organic/live/advanced', $payload, 'POST');
-        
+
         if (!$response['ok']) {
             throw new \RuntimeException('HTTP request failed: ' . $response['status']);
         }
@@ -110,7 +110,7 @@ class SerpService
         }
 
         $items = $task['result'][0]['items'] ?? [];
-        
+
         return array_map(fn($item) => (object) $item, $items);
     }
 

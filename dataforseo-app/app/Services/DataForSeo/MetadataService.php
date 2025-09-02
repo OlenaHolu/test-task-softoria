@@ -19,7 +19,7 @@ class MetadataService
         return Cache::remember('dfs.locations', 86400, function () {
             try {
                 $response = $this->client->httpRequest('serp/google/locations');
-                
+
                 if (!$response['ok']) {
                     return [];
                 }
@@ -42,7 +42,7 @@ class MetadataService
         return Cache::remember('dfs.languages', 86400, function () {
             try {
                 $response = $this->client->httpRequest('serp/languages');
-                
+
                 if (!$response['ok']) {
                     return [];
                 }
@@ -69,13 +69,13 @@ class MetadataService
 
         $map = [];
         foreach ($locations as $location) {
-            $code = is_object($location) 
-                ? (int)($location->location_code ?? 0) 
+            $code = is_object($location)
+                ? (int)($location->location_code ?? 0)
                 : (int)($location['location_code'] ?? 0);
-            $name = is_object($location) 
-                ? (string)($location->location_name ?? '') 
+            $name = is_object($location)
+                ? (string)($location->location_name ?? '')
                 : (string)($location['location_name'] ?? '');
-            
+
             if ($code && $name) {
                 $map[$code] = $name;
             }
@@ -93,13 +93,13 @@ class MetadataService
 
         $map = [];
         foreach ($languages as $language) {
-            $code = is_object($language) 
-                ? (string)($language->language_code ?? '') 
+            $code = is_object($language)
+                ? (string)($language->language_code ?? '')
                 : (string)($language['language_code'] ?? '');
-            $name = is_object($language) 
-                ? (string)($language->language_name ?? '') 
+            $name = is_object($language)
+                ? (string)($language->language_name ?? '')
                 : (string)($language['language_name'] ?? '');
-            
+
             if ($code && $name) {
                 $map[$code] = $name;
             }

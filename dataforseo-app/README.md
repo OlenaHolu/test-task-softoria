@@ -26,7 +26,7 @@ The app provides a simple UI form to check the ranking of a domain for a given k
     ```bash
     composer require jovix/dataforseo-clientv3
 
-3. Configure environment variables in your .env file:
+3. Copy .env.example to .env and update it with your DataForSEO credentials:
     ```.env
     DATAFORSEO_LOGIN=your_login@email.com
     DATAFORSEO_PASSWORD=your_api_password
